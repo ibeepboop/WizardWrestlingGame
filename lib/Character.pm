@@ -94,16 +94,28 @@ my %class_attributes = (
     },
 );
 
+my %character_stats = (
+    name     => "",
+    faction  => "",
+    race     => "",
+    class    => "",
+    charisma => 0,
+    strength => 0,
+    agility  => 0,
+);
+
 sub create_player_character {
     print color('blue');
-    print "Welcome to Hogwrasslin’ School of Wrestling and Wizardry!\n";
+    print "Welcome to Hogwrasslin' School of Wrestling and Wizardry!\n";
     print "You are about to embark on a magical journey of wrestling and wizardry.\n";
-    print "But first, let’s create your character.\n\n";
+    print "But first, let's create your character.\n\n";
     print color('reset');
-    name_character();
-    display_faction_menu();
-    display_race_menu();
-    display_class_menu();
+
+    my $name = name_character();
+    my $faction = display_faction_menu();   
+    my $race = display_race_menu();
+    my $class = display_class_menu();
+    my $character = update_character_stats($name, $faction, $race, $class, $charisma, $strength, $agility);
 }
 
 sub name_character {
@@ -115,6 +127,22 @@ sub name_character {
     print color('blue');
     print "\nWelcome, $name!\n\n";
     print color('reset');
+}
+
+sub update_character_stats {
+    $character_stats{name} = shift;
+    $character_stats{faction} = shift;
+    $character_stats{race} = shift;
+    $character_stats{class} = shift;
+    $character_stats{charisma} = $faction_attributes{$character_stats{faction}}{charisma} +
+                                 $race_attributes{$character_stats{race}}{charisma} +
+                                 $class_attributes{$character_stats{class}}{charisma};
+    $character_stats{strength} = $faction_attributes{$character_stats{faction}}{strength} +
+                                 $race_attributes{$character_stats{rac}}{strength} +
+                                 $class_attributes{$character_stats{class}}{strength};
+    $character_stats{agility} =  $faction_attributes{$character_stats{faction}}{agility} +
+                                 $race_attributes{$character_stats{race}}{agility} +
+                                 $class_attributes{$character_stats{class}}{agility};
 }
 
 sub display_faction_menu {
